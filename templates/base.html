@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'includes/header_refs.html' %}
+</head>
+
+<!-- body -->
+
+<body class="main-layout">
+<!-- loader  -->
+<div class="loader_bg">
+    <div class="loader"><img src="{% static 'images/loading.gif' %}" alt=""/></div>
+</div>
+
+
+{% block content %}
+{% endblock %}
+
+
+
+<div class="overlay"></div>
+<!-- Javascript files-->
+{% include 'includes/footer_refs.html' %}
+
+</body>
+
+</html>
