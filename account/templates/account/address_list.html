@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <div class="container">
+        <p class="text">Your Addresses: {{ address_count }}</p>
+        {% if allow_add %}
+           <a class="btn btn-primary" href="{% url 'account:client-address-add' request.user.id %}?next={% url 'account:client-addresses' request.user.id %}">Add Address</a>
+        {% else %}
+            <p class="container">Your addresses box is full!!</p>
+        {% endif %}
+    </div>
+    <div class="table tab-content">
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">State</th>
+            <th scope="col">City</th>
+            <th scope="col">Address</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+
+        </tr>
+        </thead>
+        <tbody>
+        {% for address in addresses %}
+            <tr>
+            <th scope="row">1</th>
+            <td>{{ address.state }}</td>
+            <td>{{ address.city }}</td>
+            <td>{{ address.address }}</td>
+            <td><a href="{% url 'account:client-address-update' request.user.id address.id %}?next={% url 'account:client-addresses' request.user.id %}">edit</a></td>
+            <td><a href="{% url 'account:client-address-delete' request.user.id address.id %}?next={% url 'account:client-addresses' request.user.id %}">delete</a></td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+    </div>
+
+{% endblock %}
