@@ -1,0 +1,46 @@
+{% load static %}
+
+<div class="sidebar">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+
+        <div id="dismiss">
+            <i class="fa fa-arrow-left"></i>
+        </div>
+
+        <ul class="list-unstyled components">
+
+            <li class="active">
+                <a href="{% url 'home' %}">Home</a>
+            </li>
+            <li>
+                <a href="about.html">About</a>
+            </li>
+            <li>
+                <a href="{% url 'menu:menu' %}">Recipe</a>
+            </li>
+            <li>
+                <a href="blog.html">Blog</a>
+            </li>
+            <li>
+                <a href="contact.html">Contact Us</a>
+            </li>
+            <hr>
+            {% if not request.user.is_authenticated %}
+                <li>
+                    <a href="{% url 'account:client-login' %}">Login</a>
+                </li>
+                <li>
+                    <a href="{% url 'account:client-creation' %}">Register</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{% url 'account:client-update' request.user.id %}">Profile</a>
+                    <a href="{% url 'account:client-addresses' request.user.id %}">Addresses</a>
+                    <a href="{% url 'account:client-logout' %}">Logout</a>
+                </li>
+            {% endif %}
+        </ul>
+
+    </nav>
+</div>

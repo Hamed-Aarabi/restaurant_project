@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ food.name }}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amatic+SC">
+    <style>
+        body, html {
+            height: 100%
+        }
+
+        body, h1, h2, h3, h4, h5, h6 {
+            font-family: "Amatic SC", sans-serif
+        }
+
+        .menu {
+            display: none
+        }
+
+    </style>
+</head>
+<body>
+<div class="w3-container w3-black w3-padding-64 w3-xxlarge" id="menu">
+    <div class="w3-content">
+
+        <h1 class="w3-center w3-jumbo" style="margin-bottom:64px">Order {{ food.name }}</h1>
+        <div class="w3-row w3-center w3-border w3-border-dark-grey">
+            <a href="javascript:void(0)" onclick="openMenu(event, 'Pizza');" id="myLink">
+                <div class="w3-col s4 tablink w3-padding-large w3-hover-red">Food</div>
+            </a>
+
+        </div>
+
+        <div id="Pizza" class="w3-container menu w3-padding-32 w3-white">
+            <img src="{{ food.image.url }}" style="width: 50px; height: 50px" alt="">
+            <h1><b>{{ food.name }}</b> <span class="w3-right w3-tag w3-dark-grey w3-round">${{ food.price }}</span>
+            </h1>
+            {#                <p class="w3-text-grey">Fresh tomatoes, fresh mozzarella, fresh basil</p>#}
+            <form method="post">
+                {% csrf_token %}
+                <div id="product_A_form" class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default btn-subtract" type="button">-</button>
+                      </span>
+                    <input id="product_A_qty" type="text" class="form-control no-padding text-center item-quantity"
+                           value="1" style="width: 50px; text-align: center" name="quantity">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default btn-add" type="button">+</button>
+                      </span>
+                        <button class="btn btn-primary" type="submit">Order</button>
+                </div>
+            </form>
+            <a href="{% url 'menu:menu' %}" class="btn btn-primary" style="text-decoration: none">Return to menu</a>
+            <hr>
+        </div>
+
+
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="w3-center w3-black w3-padding-48 w3-xxlarge">
+    <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank"
+                     class="w3-hover-text-green">w3.css</a></p>
+</footer>
+
+<script>
+    // Tabbed Menu
+    function openMenu(evt, menuName) {
+        var i, x, tablinks;
+        x = document.getElementsByClassName("menu");
+        for (i = 0; i < x.length; i++) {
+            x[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < x.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+        }
+        document.getElementById(menuName).style.display = "block";
+        evt.currentTarget.firstElementChild.className += " w3-red";
+    }
+
+    document.getElementById("myLink").click();
+    var minus_A = document.querySelector("#product_A_form .btn-subtract")
+    var add_A = document.querySelector("#product_A_form .btn-add");
+    var quantity_A = document.querySelector("#product_A_form .item-quantity");
+
+    minus_A.addEventListener("click", function () {
+        if (quantity_A.value > 1){
+            quantity_A.value--;
+        }
+        else {
+            quantity_A.value = 1
+        }
+
+    });
+
+    add_A.addEventListener("click", function () {
+        quantity_A.value++;
+    });
+</script>
+
+</body>
+</html>

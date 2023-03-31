@@ -2,9 +2,9 @@ import uuid
 from random import randint
 from .mixins import ClientLoginMixin
 from django.contrib.auth import login, authenticate, logout
-from django.shortcuts import render, redirect, HttpResponse, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import View, FormView, UpdateView, ListView, DeleteView
+from django.views.generic import FormView, UpdateView, ListView, DeleteView
 from .forms import OtpForm, OtpCreationForm, LoginForm, ClientChangeForm, AddressForm
 from .models import Client, Otp, Address
 import datetime
@@ -20,6 +20,7 @@ class ClientCreationView(FormView):
         cd = form.cleaned_data
         uuid_otp = uuid.uuid4()
         otp_code_create = randint(1000, 9999)
+        print(otp_code_create)
         self.request.session['phone'] = cd['phone']
         self.request.session[self.request.session['phone']] = str(uuid_otp)
         Otp.objects.create(phone=cd['phone'], password=cd['password1_otp'], token=str(uuid_otp),
@@ -38,31 +39,33 @@ class ClientVerificationView(FormView):
         if not abs(datetime.datetime.now().second - user.otp_create_at.second) > 10:
             if Otp.objects.filter(otp_code=cd['otp_input'], token=self.request.session[self.request.session['phone']],
                                   expired=False).exists():
-                Client.objects.create_user(phone=user.phone, password=user.password)
+                new_user = Client.objects.create_user(phone=user.phone, password=user.password)
                 user.expired = True
                 user.save()
                 del self.request.session[self.request.session['phone']]
                 del self.request.session['phone']
                 self.request.session.modified = True
+                login(self.request, new_user, backend='django.contrib.auth.backends.ModelBackend')
         else:
             user.expired = True
             user.save()
             return redirect('account:client-verification')
         return super(ClientVerificationView, self).form_valid(form)
 
-    def form_invalid(self, form):
-        cd = form.cleaned_data
-        user = Otp.objects.get(token=self.request.session[self.request.session['phone']])
-        if abs(datetime.datetime.now().second - user.otp_create_at.second) > 10:
-            user.expired = True
-            user.save()
-            return redirect('account:client-verification')
-        return super(ClientVerificationView, self).form_valid(form)
+    # def form_invalid(self, form):
+    #     cd = form.cleaned_data
+    #     user = Otp.objects.get(token=self.request.session[self.request.session['phone']])
+    #     if abs(datetime.datetime.now().second - user.otp_create_at.second) > 10:
+    #         user.expired = True
+    #         user.save()
+    #         return redirect('account:client-verification')
+    #     return super(ClientVerificationView, self).form_valid(form)
 
 
 def client_verification_resend(request):
     user = Otp.objects.get(token=request.session[request.session['phone']])
     otp_code_resend = randint(1000, 9999)
+    print(otp_code_resend)
     user.otp_code = otp_code_resend
     user.expired = False
     user.save()
@@ -72,7 +75,6 @@ def client_verification_resend(request):
 class ClientLoginView(ClientLoginMixin, FormView):
     template_name = 'account/client_login.html'
     form_class = LoginForm
-    success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         cd = form.cleaned_data
@@ -82,6 +84,14 @@ class ClientLoginView(ClientLoginMixin, FormView):
         if next_page:
             return redirect(next_page)
         return super(ClientLoginView, self).form_valid(form)
+
+    def get_success_url(self):
+        next_page = self.request.GET.get('next')
+        if next_page:
+            self.success_url = next_page
+        else:
+            self.success_url=reverse_lazy('home')
+        return super(ClientLoginView, self).get_success_url()
 
 
 class ClientUpdateView(LoginRequiredMixin, UpdateView):

@@ -23,5 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('home', views.HomeView.as_view(), name='home'),
     path('account/', include('account.urls')),
+    path('menu/', include('menu.urls')),
+    path('cart/', include('cart.urls')),
     path('', views.RedirectView.as_view(url='home'), name='go_to_home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

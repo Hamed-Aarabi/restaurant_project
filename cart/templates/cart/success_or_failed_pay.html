@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container" align="center">
+    <h1>Your Pay is {{ status }}</h1>
+    {% if status == 'success' %}
+        <a href="{% url 'home' %}" style="text-decoration: none" class="btn btn--green btn-sm"><p>Back To Home Page</p></a>
+    {% elif status == 'failed' %}
+        <a href="{% url 'home' %}" style="text-decoration: none" class="btn btn--danger btn-sm"><p>Back To Order</p></a>
+    {% endif %}
+</div>
+
+</body>
+</html>
