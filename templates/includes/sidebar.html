@@ -23,7 +23,7 @@
                 <a href="blog.html">Blog</a>
             </li>
             <li>
-                <a href="contact.html">Contact Us</a>
+                <a href="{% url 'contact_us:contact-us' %}">Contact Us</a>
             </li>
             <hr>
             {% if not request.user.is_authenticated %}

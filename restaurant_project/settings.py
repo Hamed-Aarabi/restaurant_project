@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'menu.apps.MenuConfig',
     'cart.apps.CartConfig',
     'contact_us.apps.ContactUsConfig',
+    'about.apps.AboutConfig',
 ]
 
 MIDDLEWARE = [

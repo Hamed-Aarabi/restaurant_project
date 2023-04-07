@@ -1,7 +1,7 @@
 {% load static %}
 
 
-<fooetr>
+<footer>
     <div class="footer">
         <div class="container-fluid">
             <div class="row">
@@ -39,30 +39,30 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
-                    <div class="footer_logo">
-                        <a href="index.html"><img src="{% static 'images/logo1.jpg' %}" alt="logo"/></a>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <ul class="lik">
-                        <li class="active"><a href="index.html">Home</a></li>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="recipe.html">Recipe</a></li>
-                        <li><a href="blog.html">Blog</a></li>
-                        <li><a href="contact.html">Contact us</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-12">
-                    <div class="new">
-                        <h3>Newsletter</h3>
-                        <form class="newtetter">
-                            <input class="tetter" placeholder="Your email" type="text" name="Your email">
-                            <button class="submit">Subscribe</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+                            <div class="col-md-12">
+                                <div class="footer_logo">
+                                    <a href="{% url 'home' %}"><img src="{% static 'images/logo1.jpg' %}" alt="logo"/></a>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <ul class="lik">
+                                    <li {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %}><a href="{% url 'home' %}">Home</a></li>
+                                    <li {% if request.resolver_match.url_name == 'about' %}class="active"{% endif %}><a href="{% url 'home' %}">About</a></li>
+                                    <li {% if request.resolver_match.url_name == 'menu' %}class="active"{% endif %}><a href="{% url 'menu:menu' %}">Recipe</a></li>
+                                    <li {% if request.resolver_match.url_name == 'blog' %}class="active"{% endif %}><a href="{% url 'home' %}">blog</a></li>
+                                    <li {% if request.resolver_match.url_name == 'contact-us' %}class="active"{% endif %}><a href="{% url 'contact_us:contact-us' %}">Contact us</a></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="new">
+                                    <h3>Newsletter</h3>
+                                    <form class="newtetter">
+                                        <input class="tetter" placeholder="Your email" type="text" name="Your email">
+                                        <button class="submit">Subscribe</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
         </div>
         <div class="copyright">
             <div class="container">
@@ -71,4 +71,4 @@
             </div>
         </div>
     </div>
-</fooetr>
+</footer>
