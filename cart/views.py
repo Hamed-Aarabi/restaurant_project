@@ -74,19 +74,17 @@ class OrderDetailView(View):
 
 
 class PaymentView(View):
-    def get(self,request, id):
+    def get(self, request, id):
         order = get_object_or_404(Order, id=id, client_id=request.user.id)
-        return render(request, 'cart/payment.html', {'order':order})
-    def post(self,request, id):
+        return render(request, 'cart/payment.html', {'order': order})
+
+    def post(self, request, id):
         order = get_object_or_404(Order, id=id, client_id=request.user.id)
         if order:
             order.paid = True
             order.save()
             status = 'success'
-            return render(request, 'cart/success_or_failed_pay.html',{'status':status})
+            return render(request, 'cart/success_or_failed_pay.html', {'status': status})
         else:
             status = 'failed'
             return render(request, 'cart/success_or_failed_pay.html', {'status': status})
-
-
-

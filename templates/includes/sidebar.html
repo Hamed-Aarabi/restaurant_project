@@ -10,19 +10,19 @@
 
         <ul class="list-unstyled components">
 
-            <li class="active">
+            <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
                 <a href="{% url 'home' %}">Home</a>
             </li>
-            <li>
-                <a href="about.html">About</a>
+            <li class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                <a href="{% url 'about:about' %}">About</a>
             </li>
-            <li>
+            <li class="{% if request.resolver_match.url_name == 'menu' %}active{% endif %}">
                 <a href="{% url 'menu:menu' %}">Recipe</a>
             </li>
-            <li>
-                <a href="blog.html">Blog</a>
+            <li class="{% if request.resolver_match.url_name == 'blogs' %}active{% endif %}">
+                <a href="{% url 'blog:blogs' %}">Blog</a>
             </li>
-            <li>
+            <li class="{% if request.resolver_match.url_name == 'contact-us' %}active{% endif %}">
                 <a href="{% url 'contact_us:contact-us' %}">Contact Us</a>
             </li>
             <hr>

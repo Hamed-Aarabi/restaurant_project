@@ -6,7 +6,7 @@
 
 
     <div class="loader_bg">
-        <div class="loader"><img src="images/loading.gif" alt=""/></div>
+        <div class="loader"><img src="{% static 'images/loading.gif' %}" alt=""/></div>
     </div>
 
     <div class="wrapper">
@@ -15,122 +15,7 @@
         {% include 'includes/sidebar.html' %}
 
         <div id="content">
-            <!-- header -->
-            <header>
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <div class="full">
-                                <a class="logo" href="{% url 'home' %}"><img src="{% static 'images/logo.png' %}"
-                                                                             alt="#"/></a>
-                            </div>
-                        </div>
-                        <div class="col-md-9">
-                            <div class="full">
-                                <div class="right_header_info">
-                                    <ul>
-                                        <li class="dinone">Contact Us : <img
-                                                style="margin-right: 15px;margin-left: 15px;"
-                                                src="{% static 'images/phone_icon.png' %}" alt="#"><a href="#">987-654-3210</a>
-                                        </li>
-                                        <li class="dinone"><img style="margin-right: 15px;"
-                                                                src="{% static 'images/mail_icon.png' %}"
-                                                                alt="#"><a href="#">demo@gmail.com</a></li>
-                                        <li class="dinone"><img
-                                                style="margin-right: 15px;height: 21px;position: relative;top: -2px;"
-                                                src="{% static 'images/location_icon.png' %}" alt="#"><a href="#">104
-                                            New york ,
-                                            USA</a></li>
-
-                                        <li><img style="margin-right: 15px;" src="{% static 'images/search_icon.png' %}"
-                                                 alt="#"></li>
-                                        <li>
-                                            <button type="button" id="sidebarCollapse">
-                                                <img src="{% static 'images/menu_icon.png' %}" alt="#">
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header>
-            <!-- end header -->
-            <!-- footer -->
-            <footer>
-                <div class="footer">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class=" col-md-12">
-                                <h2>Request A<strong class="white"> Call Back</strong></h2>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-
-                                <form class="main_form" method="post">
-                                    {% csrf_token %}
-                                    <div class="row">
-
-                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            {{ form.name }}
-
-                                        </div>
-                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            {{ form.email }}
-
-                                        </div>
-                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                           {{ form.phone }}
-
-                                        </div>
-
-                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                           {{ form.message }}
-
-                                        </div>
-
-                                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                            <button class="send">Send</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
-                                <div class="img-box">
-                                    <figure><img src="{% static 'images/img.jpg' %}" alt="img"/></figure>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="footer_logo">
-                                    <a href="{% url 'home' %}"><img src="{% static 'images/logo1.jpg' %}"
-                                                                    alt="logo"/></a>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <ul class="lik">
-                                    <li><a href="{% url 'home' %}">Home</a></li>
-                                    <li><a href="{% url 'home' %}">About</a></li>
-                                    <li><a href="{% url 'menu:menu' %}">Recipe</a></li>
-                                    <li><a href="{% url 'home' %}">blog</a></li>
-                                    <li class="active"><a href="{% url 'contact_us:contact-us' %}">Contact us</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="new">
-                                    <h3>Newsletter</h3>
-                                    <form class="newtetter">
-                                        <input class="tetter" placeholder="Your email" type="text" name="Your email">
-                                        <button class="submit">Subscribe</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </footer>
+            {% include 'includes/footer.html' %}
             <!-- end footer -->
 
         </div>

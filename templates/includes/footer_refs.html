@@ -6,6 +6,7 @@
 <script src="{% static 'js/custom.js' %}"></script>
 <script src="{% static 'js/jquery.mCustomScrollbar.concat.min.js' %}"></script>
 
+
 <script src="{% static 'js/jquery-3.0.0.min.js' %}"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -25,6 +26,20 @@
             $('a[aria-expanded=true]').attr('aria-expanded', 'false');
         });
     });
+    function blog_like_system(id){
+    var like_element = document.getElementById('like')
+    var like_counter = document.getElementById('counter_like')
+    $.get(`/blogs/like/${id}`).then(response =>{
+        if(response['response'] === 'liked'){
+            like_element.className = 'fa fa-heart'
+            like_counter.innerText = Number(like_counter.innerText) + 1
+        }
+        else {
+            like_element.className = 'fa fa-heart-o'
+            like_counter.innerText = Number(like_counter.innerText) - 1
+        }
+
+    })}
 </script>
 
 <style>

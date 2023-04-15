@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+
+{% block content %}
+    {% include 'includes/sidebar.html' %}
+    <div class="yellow_bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title">
+                        <h2>Our Blog</h2>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- blog -->
+    <div class="blog">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title">
+                        <i><img src="{% static 'images/title.png' %}" alt="#"/></i>
+
+                        <span>when looking at its layout. The point of using Lorem</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for blog in blogs %}
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mar_bottom">
+                        <div class="blog_box">
+                            <div class="blog_img_box">
+                                <figure><img src="{{ blog.image.url }}" style="width: 300px;  height: 300px" alt="#"/>
+                                    <span>{{ blog.date.day }}/{{ blog.date.month }}/{{ blog.date.year }}</span>
+                                </figure>
+                            </div>
+                            <a href="{% url 'blog:detail' blog.id %}"><h3>{{ blog.title }}</h3></a>
+                            <p>{{ blog.body|truncatewords:15 }}<a href="{% url 'blog:detail' blog.id %}">...</a></p>
+                        </div>
+                    </div>
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+    <!-- end blog -->
+
+
+    <!-- footer -->
+    {% include 'includes/footer.html' %}
+    <!-- end footer -->
+
+
+
+{% endblock %}

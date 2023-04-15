@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+    {% include 'includes/sidebar.html' %}
+    <div class="yellow_bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title">
+                        <h2>Our Blog</h2>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- blog -->
+    <div class="blog">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="title">
+                        <i><img src="{% static 'images/title.png' %}" alt="#"/></i>
+
+                        <span>when looking at its layout. The point of using Lorem</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mar_bottom">
+                        <div class="blog_box">
+                            <div class="blog_img_box">
+                                <figure><img src="{{ blog.image.url }}" style="width: 300px;  height: 300px" alt="#"/>
+                                    <span>{{ blog.date.day }}/{{ blog.date.month }}/{{ blog.date.year }}</span>
+                                </figure>
+                            </div>
+                            <h3>{{ blog.title }}</h3>
+                            <p>{{ blog.body }} </p>
+                            {% if liked %}
+                                <a onclick="blog_like_system('{{ blog.id }}')"><i id="like" class="fa fa-heart"
+                                                                                  style="font-size:24px; color: red"></i></a>
+                                <span id="counter_like">{{ blog.like_counter }}</span>
+                            {% else %}
+                                <a onclick="blog_like_system('{{ blog.id }}')"><i id="like" class="fa fa-heart-o"
+                                                                                  style="font-size:24px; color: red"></i></a>
+                                 <span id="counter_like">{{ blog.like_counter }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+
+
+            </div>
+        </div>
+    </div>
+    <!-- end blog -->
+
+
+    <!-- footer -->
+    {% include 'includes/footer.html' %}
+    <!-- end footer -->
+
+
+
+{% endblock %}

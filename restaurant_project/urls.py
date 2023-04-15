@@ -17,7 +17,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from . import settings, views
-from django.views.generic import  RedirectView
+from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,5 +27,6 @@ urlpatterns = [
     path('cart/', include('cart.urls')),
     path('contact-us/', include('contact_us.urls')),
     path('about/', include('about.urls')),
-    path('', views.RedirectView.as_view(url='home'), name='go_to_home'),
+    path('blogs/', include('blog.urls')),
+    path('', RedirectView.as_view(url='home'), name='go_to_home'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

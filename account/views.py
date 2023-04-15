@@ -1,8 +1,8 @@
 import uuid
 from random import randint
-from .mixins import ClientLoginMixin
+from .mixins import ClientLoginMixin, VerificationValidMixin
 from django.contrib.auth import login, authenticate, logout
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import  redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import FormView, UpdateView, ListView, DeleteView
 from .forms import OtpForm, OtpCreationForm, LoginForm, ClientChangeForm, AddressForm
@@ -28,7 +28,7 @@ class ClientCreationView(FormView):
         return super(ClientCreationView, self).form_valid(form)
 
 
-class ClientVerificationView(FormView):
+class ClientVerificationView(VerificationValidMixin, FormView):
     template_name = 'account/client_verification.html'
     form_class = OtpForm
     success_url = reverse_lazy('home')
@@ -51,15 +51,6 @@ class ClientVerificationView(FormView):
             user.save()
             return redirect('account:client-verification')
         return super(ClientVerificationView, self).form_valid(form)
-
-    # def form_invalid(self, form):
-    #     cd = form.cleaned_data
-    #     user = Otp.objects.get(token=self.request.session[self.request.session['phone']])
-    #     if abs(datetime.datetime.now().second - user.otp_create_at.second) > 10:
-    #         user.expired = True
-    #         user.save()
-    #         return redirect('account:client-verification')
-    #     return super(ClientVerificationView, self).form_valid(form)
 
 
 def client_verification_resend(request):
@@ -90,7 +81,7 @@ class ClientLoginView(ClientLoginMixin, FormView):
         if next_page:
             self.success_url = next_page
         else:
-            self.success_url=reverse_lazy('home')
+            self.success_url = reverse_lazy('home')
         return super(ClientLoginView, self).get_success_url()
 
 
@@ -105,6 +96,7 @@ class ClientUpdateView(LoginRequiredMixin, UpdateView):
         if self.kwargs.get('pk') != user.id:
             return redirect('account:client-update', user.id)
         return super(ClientUpdateView, self).get(request, *args, **kwargs)
+
 
 class AddAddressView(FormView):
     template_name = 'account/address_add.html'
@@ -121,6 +113,7 @@ class AddAddressView(FormView):
         Address.objects.create(client=self.request.user, state=cd['state'], city=cd['city'], address=cd['address'])
         return super(AddAddressView, self).form_valid(form)
 
+
 class AddressListView(ListView):
     template_name = 'account/address_list.html'
     context_object_name = 'addresses'
@@ -130,7 +123,6 @@ class AddressListView(ListView):
         if self.kwargs.get('pk') != user.id:
             return redirect('account:client-addresses', user.id)
         return super(AddressListView, self).get(request, *args, **kwargs)
-
 
     def get_queryset(self, **kwargs):
         user = Client.objects.get(id=self.kwargs.get('pk'))
@@ -143,7 +135,7 @@ class AddressListView(ListView):
         user = Client.objects.get(id=self.kwargs.get('pk'))
         queryset = user.client_address.all().count()
         context['address_count'] = queryset
-        if queryset >= 4 :
+        if queryset >= 4:
             allow_add = False
         context['allow_add'] = allow_add
         return context
@@ -163,6 +155,7 @@ class AddressEditView(UpdateView):
         if next_page:
             self.success_url = next_page
         return super(AddressEditView, self).get_success_url()
+
 
 class AddressDeleteView(DeleteView):
     template_name = 'account/address_delete.html'

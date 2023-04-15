@@ -1,0 +1,13 @@
+{% if request.resolver_match.url_name == 'home' %}
+    <title>Home</title>
+{% elif request.resolver_match.url_name == 'about' %}
+    <title>About</title>
+{% elif request.resolver_match.url_name == 'contact-us' %}
+    <title>Contact-us</title>
+{% elif request.resolver_match.url_name == 'menu' %}
+    <title>Menu</title>
+{% elif request.resolver_match.url_name == 'blogs' %}
+    <title>Blog</title>
+{% else %}
+    <title>Enjoy Your Food</title>
+{% endif %}

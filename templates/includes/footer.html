@@ -10,22 +10,28 @@
                 </div>
                 <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
 
-                    <form class="main_form">
+                    <form class="main_form" method="post">
+                        {% csrf_token %}
                         <div class="row">
 
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                <input class="form-control" placeholder="Name" type="text" name="Name">
+                                {{ form.name }}
+
                             </div>
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                <input class="form-control" placeholder="Email" type="text" name="Email">
+                                {{ form.email }}
+
                             </div>
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                <input class="form-control" placeholder="Phone" type="text" name="Phone">
+                                {{ form.phone }}
+
                             </div>
+
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                                        <textarea class="textarea" placeholder="Message" type="text"
-                                                  name="Message"></textarea>
+                                {{ form.message }}
+
                             </div>
+
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                                 <button class="send">Send</button>
                             </div>
@@ -39,30 +45,35 @@
                 </div>
             </div>
             <div class="row">
-                            <div class="col-md-12">
-                                <div class="footer_logo">
-                                    <a href="{% url 'home' %}"><img src="{% static 'images/logo1.jpg' %}" alt="logo"/></a>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <ul class="lik">
-                                    <li {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %}><a href="{% url 'home' %}">Home</a></li>
-                                    <li {% if request.resolver_match.url_name == 'about' %}class="active"{% endif %}><a href="{% url 'home' %}">About</a></li>
-                                    <li {% if request.resolver_match.url_name == 'menu' %}class="active"{% endif %}><a href="{% url 'menu:menu' %}">Recipe</a></li>
-                                    <li {% if request.resolver_match.url_name == 'blog' %}class="active"{% endif %}><a href="{% url 'home' %}">blog</a></li>
-                                    <li {% if request.resolver_match.url_name == 'contact-us' %}class="active"{% endif %}><a href="{% url 'contact_us:contact-us' %}">Contact us</a></li>
-                                </ul>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="new">
-                                    <h3>Newsletter</h3>
-                                    <form class="newtetter">
-                                        <input class="tetter" placeholder="Your email" type="text" name="Your email">
-                                        <button class="submit">Subscribe</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                <div class="col-md-12">
+                    <div class="footer_logo">
+                        <a href="{% url 'home' %}"><img src="{% static 'images/logo1.jpg' %}" alt="logo"/></a>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <ul class="lik">
+                        <li {% if request.resolver_match.url_name == 'home' %}class="active"{% endif %}><a
+                                href="{% url 'home' %}">Home</a></li>
+                        <li {% if request.resolver_match.url_name == 'about' %}class="active"{% endif %}><a
+                                href="{% url 'about:about' %}">About</a></li>
+                        <li {% if request.resolver_match.url_name == 'menu' %}class="active"{% endif %}><a
+                                href="{% url 'menu:menu' %}">Recipe</a></li>
+                        <li {% if request.resolver_match.url_name == 'blog' %}class="active"{% endif %}><a
+                                href="{% url 'blog:blogs' %}">blog</a></li>
+                        <li {% if request.resolver_match.url_name == 'contact-us' %}class="active"{% endif %}><a
+                                href="{% url 'contact_us:contact-us' %}">Contact us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-12">
+                    <div class="new">
+                        <h3>Newsletter</h3>
+                        <form class="newtetter">
+                            <input class="tetter" placeholder="Your email" type="text" name="Your email">
+                            <button class="submit">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="copyright">
             <div class="container">
